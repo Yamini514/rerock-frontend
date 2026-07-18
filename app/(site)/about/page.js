@@ -53,22 +53,22 @@ export default function AboutPage() {
               apartment purchase to multi-crore commercial portfolios.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-6">
-            <Card className="p-6 text-center">
-              <p className="font-tabular text-3xl font-semibold text-primary"><CountUp value={2400} />+</p>
-              <p className="mt-1 text-sm text-ink-muted">Transactions Advised</p>
+          <div className="grid grid-cols-2 gap-3 sm:gap-6">
+            <Card className="p-4 text-center sm:p-6">
+              <p className="font-tabular text-xl font-semibold text-primary sm:text-3xl"><CountUp value={2400} />+</p>
+              <p className="mt-1 text-xs text-ink-muted sm:text-sm">Transactions Advised</p>
             </Card>
-            <Card className="p-6 text-center">
-              <p className="font-tabular text-3xl font-semibold text-primary">₹<CountUp value={2000} />Cr+</p>
-              <p className="mt-1 text-sm text-ink-muted">Assets Under Advisory</p>
+            <Card className="p-4 text-center sm:p-6">
+              <p className="font-tabular text-xl font-semibold text-primary sm:text-3xl">₹<CountUp value={2000} />Cr+</p>
+              <p className="mt-1 text-xs text-ink-muted sm:text-sm">Assets Under Advisory</p>
             </Card>
-            <Card className="p-6 text-center">
-              <p className="font-tabular text-3xl font-semibold text-primary"><CountUp value={6} /></p>
-              <p className="mt-1 text-sm text-ink-muted">Builder Partners</p>
+            <Card className="p-4 text-center sm:p-6">
+              <p className="font-tabular text-xl font-semibold text-primary sm:text-3xl"><CountUp value={6} /></p>
+              <p className="mt-1 text-xs text-ink-muted sm:text-sm">Builder Partners</p>
             </Card>
-            <Card className="p-6 text-center">
-              <p className="font-tabular text-3xl font-semibold text-primary"><CountUp value={98} />%</p>
-              <p className="mt-1 text-sm text-ink-muted">Client Satisfaction</p>
+            <Card className="p-4 text-center sm:p-6">
+              <p className="font-tabular text-xl font-semibold text-primary sm:text-3xl"><CountUp value={98} />%</p>
+              <p className="mt-1 text-xs text-ink-muted sm:text-sm">Client Satisfaction</p>
             </Card>
           </div>
         </div>

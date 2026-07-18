@@ -111,7 +111,7 @@ export default async function PropertyDetailPage({ params }) {
   };
 
   return (
-    <div className="pb-40 md:pb-28">
+    <div className="pb-52 md:pb-28">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -133,7 +133,12 @@ export default async function PropertyDetailPage({ params }) {
               <MapPin className="h-4 w-4" /> {community?.name}, {location?.name}, {location?.city}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-8 border-y border-border py-6">
+            <div className="mt-6 flex items-baseline gap-2 lg:hidden">
+              <p className="font-tabular text-3xl font-semibold text-ink">{formatINR(property.price)}</p>
+              <p className="font-tabular text-sm text-ink-faint">₹{property.pricePerSqft.toLocaleString("en-IN")}/sq.ft</p>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-6 border-y border-border py-6 sm:flex sm:flex-wrap sm:gap-8">
               {property.bedrooms && (
                 <div>
                   <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-ink-faint"><BedDouble className="h-3.5 w-3.5" /> Bedrooms</p>

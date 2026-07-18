@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Phone, Plus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -12,6 +13,12 @@ const actions = [
 
 export function FAB() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Property detail pages already surface Call/WhatsApp prominently in their own sticky CTA bar —
+  // showing the floating action button there too would duplicate it and overlap that bar on mobile.
+  const hasOwnStickyCTA = pathname?.startsWith("/properties/");
+  if (hasOwnStickyCTA) return null;
 
   return (
     <div className="fixed bottom-24 right-5 z-40 md:hidden">
