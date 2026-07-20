@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { AddModal } from "@/components/admin/AddModal";
 import { ImageUploader } from "@/components/admin/ImageUploader";
+import { DocumentUploader } from "@/components/documents/DocumentUploader";
 import { Badge, statusTone } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Table } from "@/components/ui/Table";
@@ -12,10 +13,12 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { useToast } from "@/components/ui/Toast";
+import { useAdminAuth } from "@/components/admin/AdminAuthContext";
 import { properties as initialProperties, propertyStatuses } from "@/lib/data/properties";
 import { locations, getLocation } from "@/lib/data/locations";
 import { builders, getBuilder } from "@/lib/data/builders";
 import { communities } from "@/lib/data/communities";
+import { addDocument } from "@/lib/data/portfolio";
 import { formatINRFull, slugify } from "@/lib/utils";
 import { required, minLength, isPositiveNumber, inRange, runValidation, hasErrors } from "@/lib/validation";
 
@@ -57,10 +60,12 @@ const emptyForm = {
   status: propertyStatuses[0],
   rera: true,
   images: [],
+  documents: [],
 };
 
 export default function AdminPropertiesPage() {
   const { toast } = useToast();
+  const { user } = useAdminAuth();
   const [items, setItems] = useState(initialProperties);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(emptyForm);
@@ -135,6 +140,7 @@ export default function AdminPropertiesPage() {
       status: form.status,
     };
     setItems((list) => [newProperty, ...list]);
+    form.documents.forEach((doc) => addDocument({ ...doc, propertyId: newProperty.slug, uploadedBy: user?.name, uploadedByRole: user?.role }));
     closeModal();
     toast({ tone: "success", title: "Property created", description: `${form.title} has been added to listings.` });
   }
@@ -191,6 +197,11 @@ export default function AdminPropertiesPage() {
           <ImageUploader images={form.images} onChange={(next) => update("images", next)} />
           {errors.images && <p className="mt-2 text-xs text-danger">{errors.images}</p>}
         </div>
+        <DocumentUploader
+          label="Property Documents (optional)"
+          hint="RERA certificate, brochure, floor plan — PDF, Word, or image · up to 15MB each"
+          onFilesSelected={(fileMetas) => update("documents", [...form.documents, ...fileMetas])}
+        />
       </AddModal>
     </div>
   );

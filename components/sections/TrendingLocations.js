@@ -9,7 +9,7 @@ import { locations } from "@/lib/data/locations";
 
 export function TrendingLocations() {
   return (
-    <section className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-32">
+    <section className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-10">
       <SectionHeading
         eyebrow="Trending Locations"
         title="Micro-markets outperforming the city average"

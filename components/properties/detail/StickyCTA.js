@@ -13,7 +13,7 @@ export function StickyCTA({ property, agent }) {
 
   return (
     <>
-      <div className="fixed inset-x-0 bottom-[calc(76px_+_env(safe-area-inset-bottom))] z-[45] border-t border-border bg-surface/95 px-4 pt-3 backdrop-blur-lg lg:bottom-0 lg:px-10 lg:py-4">
+      <div className="fixed inset-x-0 bottom-[calc(76px_+_env(safe-area-inset-bottom))] z-[45] border-t border-border bg-surface/95 px-4 pt-3 backdrop-blur-lg lg:hidden">
 
         <div className="mx-auto max-w-[90rem] pb-3 lg:pb-0">
           <div className="mb-2.5 flex items-baseline justify-between gap-3 md:hidden">

@@ -23,13 +23,13 @@ export default function HomePage() {
         href="/properties?type=Villa"
         tone="soft"
       />
-      <PropertyShowcase
+      {/* <PropertyShowcase
         eyebrow="Open Plots"
         title="Land banking, done right"
         description="RERA-approved, clear-title plots in tomorrow's growth corridors."
         type="Plot"
         href="/properties?type=Plot"
-      />
+      /> */}
       <InvestmentOpportunities />
       <PropertyShowcase
         eyebrow="Commercial Spaces"

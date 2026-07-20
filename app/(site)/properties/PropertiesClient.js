@@ -120,7 +120,7 @@ export function PropertiesClient() {
   }
 
   return (
-    <div className="mx-auto max-w-[90rem] px-6 py-10 md:px-10 md:py-14">
+    <div className="mx-auto max-w-[90rem] px-6 py-10 md:px-13 md:py-14">
       <div className="mb-8 flex flex-col gap-2">
         <h1 className="font-display text-3xl text-ink md:text-4xl">Explore Properties</h1>
         <p className="text-ink-muted">{loading ? "Searching listings..." : `${filtered.length} properties match your criteria`}</p>
@@ -152,7 +152,7 @@ export function PropertiesClient() {
                 {[
                   { key: "grid", icon: LayoutGrid },
                   { key: "list", icon: List },
-                  { key: "map", icon: MapIcon },
+                  // { key: "map", icon: MapIcon },
                 ].map((v) => (
                   <button
                     key={v.key}

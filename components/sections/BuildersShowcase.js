@@ -7,7 +7,7 @@ import { builders } from "@/lib/data/builders";
 
 export function BuildersShowcase() {
   return (
-    <section className="bg-surface-soft py-16 md:py-32">
+    <section className="bg-surface-soft py-16 md:py-10">
       <div className="mx-auto max-w-[90rem] px-6 md:px-10">
         <SectionHeading eyebrow="Our Builder Partners" title="Backed by names Hyderabad already trusts" />
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

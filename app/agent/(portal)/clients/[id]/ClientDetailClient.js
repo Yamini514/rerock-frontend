@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, FileText, Gift, Mail, MessageCircle, PieChart, Sparkles } from "lucide-react";
@@ -9,13 +10,22 @@ import { StatCard } from "@/components/ui/StatCard";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/StateScreen";
 import { DocumentsSection } from "@/components/properties/detail/DocumentsSection";
+import { DocumentUploader } from "@/components/documents/DocumentUploader";
+import { useAgentAuth } from "@/components/agent/AgentAuthContext";
 import { getClient } from "@/lib/data/clients";
 import { siteVisits } from "@/lib/data/siteVisits";
-import { portfolioSummary, savedProperties, recommendations, referralSummary, documents } from "@/lib/data/portfolio";
+import { portfolioSummary, savedProperties, recommendations, referralSummary, documents, addDocument } from "@/lib/data/portfolio";
 import { formatINR, formatINRFull } from "@/lib/utils";
 
 export function ClientDetailClient({ id }) {
+  const { user } = useAgentAuth();
   const client = getClient(id);
+  const [clientDocs, setClientDocs] = useState(() => documents.filter((d) => d.clientId === id));
+
+  function handleUpload(fileMetas) {
+    const added = fileMetas.map((meta) => addDocument({ ...meta, clientId: id, uploadedBy: user?.name, uploadedByRole: "Agent" }));
+    setClientDocs((docs) => [...added, ...docs]);
+  }
 
   if (!client) {
     return (
@@ -130,15 +140,22 @@ export function ClientDetailClient({ id }) {
               ))}
             </div>
           </section>
-
-          <Card className="mt-8 p-6">
-            <p className="mb-4 flex items-center gap-2 font-display text-lg text-ink">
-              <FileText className="h-5 w-5 text-primary" /> Documents
-            </p>
-            <DocumentsSection documents={documents} />
-          </Card>
         </>
       )}
+
+      <Card className="mt-8 p-6">
+        <p className="mb-4 flex items-center gap-2 font-display text-lg text-ink">
+          <FileText className="h-5 w-5 text-primary" /> Documents
+        </p>
+        {clientDocs.length === 0 ? (
+          <EmptyState title="No documents yet" description="Upload deal documents for this client." className="py-8" />
+        ) : (
+          <div className="mb-6">
+            <DocumentsSection documents={clientDocs} />
+          </div>
+        )}
+        <DocumentUploader label="Upload a document for this client" onFilesSelected={handleUpload} />
+      </Card>
 
       <div className="mt-8 flex justify-end">
         <Button as="a" href={`https://wa.me/${client.phone.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer" variant="outline" size="sm">

@@ -11,7 +11,7 @@ export function PropertyShowcase({ eyebrow, title, description, type, href, tone
 
   return (
     <section className={tone === "soft" ? "bg-surface-soft" : ""}>
-      <div className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-32">
+      <div className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-10">
         <SectionHeading eyebrow={eyebrow} title={title} description={description} href={href} />
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((p, i) => (

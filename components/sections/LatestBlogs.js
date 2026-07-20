@@ -9,7 +9,7 @@ import { blogs } from "@/lib/data/blogs";
 
 export function LatestBlogs() {
   return (
-    <section id="blogs" className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-32">
+    <section id="blogs" className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-10">
       <SectionHeading eyebrow="Insights" title="Latest from the REROCK Journal" description="Market intelligence, buyer guides, and investment strategy." />
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {blogs.map((post, i) => (

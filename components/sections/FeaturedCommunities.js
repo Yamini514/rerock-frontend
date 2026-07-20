@@ -7,7 +7,7 @@ import { communities } from "@/lib/data/communities";
 
 export function FeaturedCommunities() {
   return (
-    <section className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-32">
+    <section className="mx-auto max-w-[90rem] px-6 py-10 md:px-10 md:py-10">
       <SectionHeading
         eyebrow="Featured Communities"
         title="Gated townships people aspire to live in"

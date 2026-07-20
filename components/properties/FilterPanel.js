@@ -111,7 +111,7 @@ export function FilterPanel({ filters, setFilters, resultCount }) {
       <FilterGroup title="Location">
         <div className="space-y-2.5">
           {locations.map((l) => (
-            <Checkbox key={l.slug} checked={filters.locations.includes(l.slug)} onChange={() => toggleArrayValue("locations", l.slug)} label={l.name} />
+            <Checkbox key={l.slug} className="w-full" checked={filters.locations.includes(l.slug)} onChange={() => toggleArrayValue("locations", l.slug)} label={l.name} />
           ))}
         </div>
       </FilterGroup>
@@ -119,7 +119,7 @@ export function FilterPanel({ filters, setFilters, resultCount }) {
       <FilterGroup title="Builder">
         <div className="space-y-2.5">
           {builders.map((b) => (
-            <Checkbox key={b.slug} checked={filters.builders.includes(b.slug)} onChange={() => toggleArrayValue("builders", b.slug)} label={b.name} />
+            <Checkbox key={b.slug} className="w-full" checked={filters.builders.includes(b.slug)} onChange={() => toggleArrayValue("builders", b.slug)} label={b.name} />
           ))}
         </div>
       </FilterGroup>
@@ -127,7 +127,7 @@ export function FilterPanel({ filters, setFilters, resultCount }) {
       <FilterGroup title="Possession Status">
         <div className="space-y-2.5">
           {propertyStatuses.map((s) => (
-            <Checkbox key={s} checked={filters.statuses.includes(s)} onChange={() => toggleArrayValue("statuses", s)} label={s} />
+            <Checkbox key={s} className="w-full" checked={filters.statuses.includes(s)} onChange={() => toggleArrayValue("statuses", s)} label={s} />
           ))}
         </div>
       </FilterGroup>
@@ -135,7 +135,7 @@ export function FilterPanel({ filters, setFilters, resultCount }) {
       <FilterGroup title="Amenities">
         <div className="space-y-2.5">
           {amenitiesList.map((a) => (
-            <Checkbox key={a} checked={filters.amenities.includes(a)} onChange={() => toggleArrayValue("amenities", a)} label={a} />
+            <Checkbox key={a} className="w-full" checked={filters.amenities.includes(a)} onChange={() => toggleArrayValue("amenities", a)} label={a} />
           ))}
         </div>
       </FilterGroup>

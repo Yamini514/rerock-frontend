@@ -177,8 +177,8 @@ export default async function CommunityDetailPage({ params }) {
         </Section>
 
         <Section title="Location & Nearby">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <MapView properties={availableProperties.length ? availableProperties : [{ location: community.location, slug: community.slug, title: community.name, images: [community.heroImage], price: community.priceRange.min }]} />
+          <div className="">
+            {/* <MapView properties={availableProperties.length ? availableProperties : [{ location: community.location, slug: community.slug, title: community.name, images: [community.heroImage], price: community.priceRange.min }]} /> */}
             <NearbyPlaces places={community.nearby} />
           </div>
         </Section>

@@ -52,7 +52,7 @@ export function Testimonials() {
   }, []);
 
   return (
-    <section className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-30">
+    <section className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-10">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <SectionHeading
           eyebrow="Client Stories"
@@ -60,7 +60,7 @@ export function Testimonials() {
           description="Real outcomes from clients who built their portfolio with REROCK."
           className="mb-0"
         />
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           <button
             onClick={() => scroll(-1)}
             className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-ink transition-colors hover:bg-surface-soft"

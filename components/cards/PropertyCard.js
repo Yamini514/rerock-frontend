@@ -32,7 +32,7 @@ export function PropertyCard({ property, className, compareChecked, onCompareTog
             />
           </motion.div>
         </Link>
-        <div className="absolute left-4 top-4 flex gap-2">
+        <div className="absolute inset-x-4 top-4 flex flex-wrap gap-3 pr-12">
           <Badge tone={statusTone[property.status] || "neutral"}>{property.status}</Badge>
           {property.rera && <Badge tone="primary">RERA</Badge>}
         </div>
@@ -49,13 +49,13 @@ export function PropertyCard({ property, className, compareChecked, onCompareTog
             }
           }}
           aria-label="Save property"
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 backdrop-blur transition-transform active:scale-90"
+          className="absolute right-4 top-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/90 backdrop-blur transition-transform active:scale-90"
         >
           <motion.span animate={saved ? { scale: [1, 1.3, 1] } : {}} transition={{ duration: 0.35 }}>
             <Heart className={cn("h-4.5 w-4.5 transition-colors", saved ? "fill-primary text-primary" : "text-ink-muted")} />
           </motion.span>
         </button>
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-5 pb-3 pt-8">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-5 pb-2 pt-8">
           <p className="font-tabular text-xl font-semibold text-white">{formatINR(property.price)}</p>
         </div>
       </div>

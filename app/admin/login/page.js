@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
             <div className="mt-6 space-y-3">
               {demoCredentials.map((cred) => (
                 <button
-                  key={cred.role}
+                  key={cred.email}
                   type="button"
                   onClick={() => autofill(cred)}
                   className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-border p-4 text-left transition-colors hover:border-primary/40 hover:bg-primary-softer"

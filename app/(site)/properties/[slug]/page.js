@@ -27,6 +27,7 @@ import { DynamicIcon } from "@/components/ui/DynamicIcon";
 import { Gallery } from "@/components/properties/detail/Gallery";
 import { Tour360 } from "@/components/properties/detail/Tour360";
 import { StickyCTA } from "@/components/properties/detail/StickyCTA";
+import { AdvisorActions } from "@/components/properties/detail/AdvisorActions";
 import { NearbyPlaces } from "@/components/properties/detail/NearbyPlaces";
 import { DocumentsSection } from "@/components/properties/detail/DocumentsSection";
 import { MapView } from "@/components/properties/MapView";
@@ -357,6 +358,7 @@ export default async function PropertyDetailPage({ params }) {
                   <div className="mt-4 flex items-center gap-1 text-xs text-ink-faint">
                     <Star className="h-3.5 w-3.5 fill-primary text-primary" /> {agent.rating} · {agent.dealsClosed} deals closed
                   </div>
+                  <AdvisorActions agent={agent} property={property} />
                 </Card>
               )}
             </div>

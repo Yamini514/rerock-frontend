@@ -12,7 +12,7 @@ const featured = [...communities].sort((a, b) => b.growthPct - a.growthPct).slic
 
 export function InvestmentOpportunities() {
   return (
-    <section className="bg-[#1c1c1e] py-16 md:py-32">
+    <section className="bg-[#1c1c1e] py-16 md:py-10">
       <div className="mx-auto max-w-[90rem] px-6 md:px-10">
         <SectionHeading
           eyebrow="Investment Opportunities"

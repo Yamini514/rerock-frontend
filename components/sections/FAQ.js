@@ -32,7 +32,7 @@ export function FAQ() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="mx-auto max-w-4xl px-6 py-16 md:px-10 md:py-32">
+    <section id="faq" className="mx-auto max-w-4xl px-6 py-16 md:px-10 md:py-10">
       <SectionHeading eyebrow="FAQ" title="Questions, answered" align="center" className="md:text-center [&>div]:mx-auto" />
       <div className="space-y-3">
         {faqs.map((item, i) => {

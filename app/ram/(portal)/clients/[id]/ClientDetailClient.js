@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, FileText, Gift, Mail, PieChart, TrendingUp } from "lucide-react";
@@ -10,13 +11,15 @@ import { Button } from "@/components/ui/Button";
 import { Table } from "@/components/ui/Table";
 import { EmptyState } from "@/components/ui/StateScreen";
 import { DocumentsSection } from "@/components/properties/detail/DocumentsSection";
+import { DocumentUploader } from "@/components/documents/DocumentUploader";
 import { GrowthChart } from "@/components/charts/GrowthChart";
 import { PricingTrendChart } from "@/components/charts/PricingTrendChart";
+import { useRamAuth } from "@/components/ram/RamAuthContext";
 import { getClient } from "@/lib/data/clients";
 import { getProperty } from "@/lib/data/properties";
 import { siteVisits } from "@/lib/data/siteVisits";
 import { referralHistory } from "@/lib/data/profile";
-import { portfolioSummary, portfolioGrowth, myInvestments, documents } from "@/lib/data/portfolio";
+import { portfolioSummary, portfolioGrowth, myInvestments, documents, addDocument } from "@/lib/data/portfolio";
 import { formatINR, formatINRFull } from "@/lib/utils";
 
 const holdingsColumns = [
@@ -34,7 +37,14 @@ const referralColumns = [
 ];
 
 export function ClientDetailClient({ id }) {
+  const { user } = useRamAuth();
   const client = getClient(id);
+  const [clientDocs, setClientDocs] = useState(() => documents.filter((d) => d.clientId === id));
+
+  function handleUpload(fileMetas) {
+    const added = fileMetas.map((meta) => addDocument({ ...meta, clientId: id, uploadedBy: user?.name, uploadedByRole: "RAM" }));
+    setClientDocs((docs) => [...added, ...docs]);
+  }
 
   if (!client) {
     return (
@@ -130,14 +140,19 @@ export function ClientDetailClient({ id }) {
         </Card>
       </div>
 
-      {hasFullDepth && (
-        <Card className="mt-8 p-6">
-          <p className="mb-4 flex items-center gap-2 font-display text-lg text-ink">
-            <FileText className="h-5 w-5 text-primary" /> Property Documents
-          </p>
-          <DocumentsSection documents={documents} />
-        </Card>
-      )}
+      <Card className="mt-8 p-6">
+        <p className="mb-4 flex items-center gap-2 font-display text-lg text-ink">
+          <FileText className="h-5 w-5 text-primary" /> Property Documents
+        </p>
+        {clientDocs.length === 0 ? (
+          <EmptyState title="No documents yet" description="Upload documents for this client." className="py-8" />
+        ) : (
+          <div className="mb-6">
+            <DocumentsSection documents={clientDocs} />
+          </div>
+        )}
+        <DocumentUploader label="Upload a document for this client" onFilesSelected={handleUpload} />
+      </Card>
     </div>
   );
 }
