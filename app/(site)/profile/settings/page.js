@@ -1,7 +1,5 @@
-import { SettingsClient } from "./SettingsClient";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "Settings" };
-
-export default function SettingsPage() {
-  return <SettingsClient />;
+export default function SettingsRedirect() {
+  redirect("/portal/profile/settings");
 }

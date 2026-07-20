@@ -35,7 +35,7 @@ export default function AdminSettingsPage() {
           <p className="font-display text-lg text-ink">Brand Information</p>
           <form className="mt-5 grid gap-5 sm:grid-cols-2" onSubmit={handleSave}>
             <Input label="Company Name" defaultValue="REROCK Realty" />
-            <Input label="Tagline" defaultValue="Your Trusted Real Estate Investment Partner" />
+            <Input label="Tagline" defaultValue="Your Real Estate Investment Partner" />
             <Input label="Support Phone" defaultValue="+91 98480 12345" />
             <Input label="Support Email" defaultValue="hello@rerockrealty.com" />
             <Textarea label="Office Address" defaultValue="Financial District, Hyderabad, Telangana" className="sm:col-span-2" rows={2} />

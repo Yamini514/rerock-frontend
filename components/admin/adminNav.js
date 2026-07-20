@@ -6,6 +6,7 @@ import {
   FileBarChart,
   Headset,
   History,
+  Image,
   Inbox,
   KeyRound,
   Landmark,
@@ -15,7 +16,6 @@ import {
   Newspaper,
   Percent,
   Quote,
-  Search,
   Settings,
   Shield,
   UserCheck,
@@ -29,7 +29,15 @@ export const adminNav = [
     items: [{ label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard }],
   },
   {
-    label: "Inventory",
+    label: "CRM",
+    items: [
+      { label: "Enquiries", href: "/admin/enquiries", icon: Inbox },
+      { label: "Follow Ups", href: "/admin/follow-ups", icon: Bell },
+      { label: "Clients", href: "/admin/clients", icon: Users },
+    ],
+  },
+  {
+    label: "Property Catalog",
     items: [
       { label: "Properties", href: "/admin/properties", icon: Building2 },
       { label: "Property Types", href: "/admin/property-types", icon: Layers },
@@ -48,18 +56,15 @@ export const adminNav = [
     ],
   },
   {
-    label: "CRM",
+    label: "Agent Network",
     items: [
-      { label: "Enquiries", href: "/admin/enquiries", icon: Inbox },
-      { label: "Follow Ups", href: "/admin/follow-ups", icon: Bell },
-      { label: "Clients", href: "/admin/clients", icon: Users },
       { label: "Portfolio Members", href: "/admin/portfolio-members", icon: UserCog },
       { label: "RAM", href: "/admin/ram", icon: Headset },
       { label: "Agents", href: "/admin/agents", icon: UserCheck },
     ],
   },
   {
-    label: "Content",
+    label: "Marketing",
     items: [
       { label: "Blogs", href: "/admin/blogs", icon: Newspaper },
       { label: "Testimonials", href: "/admin/testimonials", icon: Quote },
@@ -67,14 +72,26 @@ export const adminNav = [
     ],
   },
   {
-    label: "System",
+    label: "Media Library",
+    items: [{ label: "Media Library", href: "/admin/media-library", icon: Image }],
+  },
+  {
+    label: "Reports",
+    items: [{ label: "Reports", href: "/admin/reports", icon: FileBarChart }],
+  },
+  {
+    label: "Settings",
     items: [
       { label: "Settings", href: "/admin/settings", icon: Settings },
+      { label: "Notifications", href: "/admin/notifications", icon: Bell },
+    ],
+  },
+  {
+    label: "Administration",
+    items: [
       { label: "Users", href: "/admin/users", icon: UserCog },
       { label: "Roles", href: "/admin/roles", icon: Shield },
       { label: "Permissions", href: "/admin/permissions", icon: KeyRound },
-      { label: "Notifications", href: "/admin/notifications", icon: Bell },
-      { label: "Reports", href: "/admin/reports", icon: FileBarChart },
       { label: "Activity Logs", href: "/admin/activity-logs", icon: Activity },
     ],
   },

@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Moon, Search, Sun, LayoutDashboard } from "lucide-react";
+import { Moon, Search, Sun, LayoutDashboard, Grip } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { MegaMenuPanel } from "@/components/layout/MegaMenu";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
+import { MoreSheet } from "@/components/layout/MoreSheet";
 import { Button } from "@/components/ui/Button";
+import { useClientAuth } from "@/components/portal/ClientAuthContext";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -21,7 +23,9 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { user } = useClientAuth();
   const [mounted, setMounted] = useState(false);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect -- client-mount flag to avoid theme hydration mismatch
@@ -38,7 +42,7 @@ export function Navbar() {
       <header
         onMouseLeave={() => setOpenMenu(null)}
         className={cn(
-          "sticky top-0 z-50 hidden transition-all duration-300 md:block",
+          "sticky top-0 z-50 hidden transition-all duration-300 lg:block",
           scrolled || openMenu ? "glass shadow-[var(--shadow-sm)]" : "bg-transparent"
         )}
       >
@@ -76,7 +80,7 @@ export function Navbar() {
                 {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
             )}
-            <Link href="/dashboard" className="flex h-11 w-11 items-center justify-center rounded-full text-ink-muted transition-colors hover:bg-surface-soft hover:text-ink" aria-label="Dashboard">
+            <Link href={user ? "/portal/dashboard" : "/login"} className="flex h-11 w-11 items-center justify-center rounded-full text-ink-muted transition-colors hover:bg-surface-soft hover:text-ink" aria-label={user ? "Dashboard" : "Sign in"}>
               <LayoutDashboard className="h-5 w-5" />
             </Link>
             <Button as={Link} href="/properties" size="md" className="ml-1">
@@ -90,7 +94,7 @@ export function Navbar() {
       {/* Minimal mobile top bar — bottom nav carries primary navigation */}
       <header
         className={cn(
-          "sticky top-0 z-50 flex h-16 items-center justify-between px-5 transition-all duration-300 md:hidden pt-safe",
+          "sticky top-0 z-50 flex h-16 items-center justify-between px-5 transition-all duration-300 lg:hidden pt-safe",
           scrolled ? "glass shadow-[var(--shadow-sm)]" : "bg-transparent"
         )}
       >
@@ -112,10 +116,18 @@ export function Navbar() {
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
           )}
+          <button
+            onClick={() => setMoreOpen(true)}
+            aria-label="More"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-ink-muted transition-colors hover:bg-surface-soft"
+          >
+            <Grip className="h-5 w-5" />
+          </button>
         </div>
       </header>
 
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <MoreSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
     </>
   );
 }

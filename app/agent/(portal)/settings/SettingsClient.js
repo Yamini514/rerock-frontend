@@ -1,18 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, User, Lock } from "lucide-react";
+import { Lock, Mail, Phone, User } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Switch } from "@/components/ui/Checkbox";
-import { Alert } from "@/components/ui/Alert";
 import { useToast } from "@/components/ui/Toast";
-import { currentUser, notificationPreferences } from "@/lib/data/profile";
+import { useAgentAuth } from "@/components/agent/AgentAuthContext";
+
+const defaultPrefs = [
+  { key: "newLeadAlerts", label: "New lead alerts", description: "Get notified the moment a lead is assigned to you.", enabled: true },
+  { key: "visitReminders", label: "Site visit reminders", description: "Reminders 1 hour before a scheduled visit.", enabled: true },
+  { key: "followUpReminders", label: "Follow-up reminders", description: "Daily digest of pending follow-ups.", enabled: true },
+  { key: "commissionAlerts", label: "Commission alerts", description: "Get notified when a commission is credited.", enabled: true },
+];
 
 export function SettingsClient() {
   const { toast } = useToast();
-  const [prefs, setPrefs] = useState(notificationPreferences);
+  const { user } = useAgentAuth();
+  const [prefs, setPrefs] = useState(defaultPrefs);
   const [saving, setSaving] = useState(false);
 
   function togglePref(key) {
@@ -29,14 +36,15 @@ export function SettingsClient() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto max-w-[60rem] space-y-8 px-6 py-10 md:px-10 md:py-14">
+      <h1 className="font-display text-3xl text-ink">Settings</h1>
+
       <Card className="p-6 md:p-8">
         <p className="font-display text-lg text-ink">Personal Information</p>
         <form className="mt-5 grid gap-5 sm:grid-cols-2" onSubmit={handleSave}>
-          <Input label="Full name" icon={User} defaultValue={currentUser.name} />
-          <Input label="Email" icon={Mail} type="email" defaultValue={currentUser.email} />
-          <Input label="Phone" icon={Phone} defaultValue={currentUser.phone} />
-          <Input label="Location" defaultValue={currentUser.location} />
+          <Input label="Full name" icon={User} defaultValue={user?.name} />
+          <Input label="Email" icon={Mail} type="email" defaultValue={user?.email} />
+          <Input label="Phone" icon={Phone} defaultValue={user?.phone} />
           <Button type="submit" className="sm:col-span-2" loading={saving}>Save Changes</Button>
         </form>
       </Card>
@@ -64,14 +72,6 @@ export function SettingsClient() {
           <Input label="Confirm new password" icon={Lock} type="password" placeholder="••••••••" />
           <Button type="submit" variant="outline" className="sm:col-span-2">Update Password</Button>
         </form>
-      </Card>
-
-      <Card className="border-danger/20 bg-danger-soft/40 p-6 md:p-8">
-        <p className="font-display text-lg text-danger">Danger Zone</p>
-        <Alert tone="danger" title="Deleting your account is permanent" className="mt-4">
-          All saved properties, documents, and portfolio history will be permanently removed.
-        </Alert>
-        <Button variant="destructive" className="mt-4">Delete My Account</Button>
       </Card>
     </div>
   );

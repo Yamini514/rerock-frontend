@@ -5,10 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Bell, Globe, LogOut, Menu, Moon, Search, Sun, User } from "lucide-react";
+import { Bell, Globe, LogOut, Menu, Moon, Sun, User } from "lucide-react";
 import { Dropdown, DropdownItem } from "@/components/ui/Dropdown";
 import { Badge } from "@/components/ui/Badge";
 import { useAdminAuth } from "@/components/admin/AdminAuthContext";
+import { GlobalSearch } from "@/components/admin/GlobalSearch";
+import { Breadcrumbs } from "@/components/admin/Breadcrumbs";
 import { notifications } from "@/lib/data/notifications";
 import { cn } from "@/lib/utils";
 
@@ -45,13 +47,8 @@ export function AdminTopbar({ onOpenMobile }) {
         <Menu className="h-5 w-5" />
       </button>
 
-      <div className="relative hidden max-w-sm flex-1 sm:block">
-        <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
-        <input
-          placeholder="Search leads, properties, clients..."
-          className="h-10 w-full rounded-btn border border-border-strong bg-surface pl-10 pr-4 text-sm text-ink outline-none focus:border-primary focus:ring-4 focus:ring-primary/10"
-        />
-      </div>
+      <Breadcrumbs />
+      <GlobalSearch />
 
       <div className="ml-auto flex items-center gap-2">
         {mounted && (

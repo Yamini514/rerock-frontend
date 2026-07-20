@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useToast } from "@/components/ui/Toast";
 import { useAdminAuth } from "@/components/admin/AdminAuthContext";
-import { roles, demoCredentials } from "@/lib/data/staff";
+import { roles, demoCredentials, adminUsers, ROLE, ALL_FLAGS, defaultAdminPermissions } from "@/lib/data/staff";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -38,11 +38,14 @@ export default function AdminLoginPage() {
     setLoading(true);
     setTimeout(() => {
       const matched = demoCredentials.find((c) => c.email.toLowerCase() === form.email.trim().toLowerCase());
+      const matchedUser = adminUsers.find((u) => u.email.toLowerCase() === form.email.trim().toLowerCase());
       const derivedName = form.email ? form.email.split("@")[0].replace(/[.]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) : "Admin User";
+      const role = matched?.role || form.role;
       login({
         name: matched?.name || derivedName,
         email: form.email || "admin@rerockrealty.com",
-        role: matched?.role || form.role,
+        role,
+        permissions: matchedUser?.permissions || (role === ROLE.SUPER_ADMIN ? ALL_FLAGS : defaultAdminPermissions),
       });
       router.push("/admin/dashboard");
     }, 700);

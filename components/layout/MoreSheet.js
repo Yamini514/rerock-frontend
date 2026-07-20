@@ -5,6 +5,7 @@ import {
   Building,
   Calculator,
   FileText,
+  Headset,
   HelpCircle,
   Landmark,
   LayoutDashboard,
@@ -22,10 +23,11 @@ const links = [
   { label: "Locations", href: "/locations", icon: MapPin },
   { label: "Investment Calculator", href: "/investment-calculator", icon: Calculator },
   { label: "Blog & Insights", href: "/blog", icon: Newspaper },
-  { label: "Documents", href: "/profile/documents", icon: FileText },
+  { label: "Documents", href: "/portal/documents", icon: FileText },
+  { label: "Support", href: "/portal/support", icon: Headset },
   { label: "Admin Portal", href: "/admin", icon: LayoutDashboard },
   { label: "FAQs", href: "/faq", icon: HelpCircle },
-  { label: "Settings", href: "/profile/settings", icon: Settings },
+  { label: "Settings", href: "/portal/profile/settings", icon: Settings },
 ];
 
 export function MoreSheet({ open, onClose }) {

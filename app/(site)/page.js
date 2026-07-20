@@ -42,8 +42,8 @@ export default function HomePage() {
       <TrendingLocations />
       <BuildersShowcase />
       <Testimonials />
-      <PricingTrends />
-      <InvestmentCalculator />
+      {/* <PricingTrends /> */}
+      {/* <InvestmentCalculator /> */}
       <LatestBlogs />
       <FAQ />
     </>

@@ -46,7 +46,7 @@ export default function OpengraphImage() {
             display: "flex",
           }}
         >
-          Your Trusted Real Estate Investment Partner
+          Your Real Estate Investment Partner
         </div>
         <div
           style={{

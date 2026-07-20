@@ -2,6 +2,7 @@ import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ToastProvider } from "@/components/ui/Toast";
+import { ClientAuthProvider } from "@/components/portal/ClientAuthContext";
 import { siteConfig, organizationJsonLd } from "@/lib/seo";
 
 const fraunces = Fraunces({
@@ -23,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Your Trusted Real Estate Investment Partner`,
+    default: `${siteConfig.name} — Your Real Estate Investment Partner`,
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -72,7 +73,9 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
         />
         <ThemeProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ClientAuthProvider>
+            <ToastProvider>{children}</ToastProvider>
+          </ClientAuthProvider>
         </ThemeProvider>
       </body>
     </html>

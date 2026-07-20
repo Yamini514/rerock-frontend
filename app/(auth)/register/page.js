@@ -8,15 +8,23 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Stepper } from "@/components/ui/Stepper";
 import { useToast } from "@/components/ui/Toast";
+import { useClientAuth } from "@/components/portal/ClientAuthContext";
+import { avatar } from "@/lib/images";
 
 const steps = ["Account", "Verify", "Done"];
 
 export default function RegisterPage() {
   const router = useRouter();
   const { toast } = useToast();
+  const { login } = useClientAuth();
   const [step, setStep] = useState(0);
+  const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+
+  function update(field, value) {
+    setForm((f) => ({ ...f, [field]: value }));
+  }
 
   function handleAccountSubmit(e) {
     e.preventDefault();
@@ -33,8 +41,16 @@ export default function RegisterPage() {
   }
 
   function finish() {
+    login({
+      name: form.name || "New Investor",
+      email: form.email,
+      phone: form.phone,
+      avatar: avatar(23),
+      memberSince: new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+      location: "Hyderabad, Telangana",
+    });
     toast({ tone: "success", title: "Account created", description: "Welcome to REROCK Realty." });
-    router.push("/dashboard");
+    router.push("/portal/dashboard");
   }
 
   return (
@@ -48,9 +64,9 @@ export default function RegisterPage() {
 
       {step === 0 && (
         <form className="space-y-5" onSubmit={handleAccountSubmit}>
-          <Input label="Full name" icon={User} placeholder="Your name" required />
-          <Input label="Email" icon={Mail} type="email" placeholder="you@email.com" required />
-          <Input label="Phone number" icon={Phone} placeholder="+91 98480 12345" required />
+          <Input label="Full name" icon={User} placeholder="Your name" value={form.name} onChange={(e) => update("name", e.target.value)} required />
+          <Input label="Email" icon={Mail} type="email" placeholder="you@email.com" value={form.email} onChange={(e) => update("email", e.target.value)} required />
+          <Input label="Phone number" icon={Phone} placeholder="+91 98480 12345" value={form.phone} onChange={(e) => update("phone", e.target.value)} required />
           <Input label="Password" icon={Lock} type="password" placeholder="••••••••" required />
           <Button type="submit" size="lg" className="w-full">Continue</Button>
         </form>

@@ -26,13 +26,15 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/StateScreen";
 import { GrowthChart } from "@/components/charts/GrowthChart";
 import { DocumentsSection } from "@/components/properties/detail/DocumentsSection";
+import { AdvisorCard } from "@/components/portal/AdvisorCard";
+import { useClientAuth } from "@/components/portal/ClientAuthContext";
+import { useShortlistStore } from "@/lib/store/shortlistStore";
 import { formatINR, formatINRFull } from "@/lib/utils";
 import {
   portfolioSummary,
   portfolioGrowth,
   myInvestments,
   upcomingVisits,
-  savedProperties,
   recentEnquiries,
   priceAlerts,
   recommendations,
@@ -55,6 +57,8 @@ const investmentColumns = [
 
 export function DashboardClient() {
   const searchParams = useSearchParams();
+  const { user } = useClientAuth();
+  const shortlistItems = useShortlistStore((s) => s.items);
 
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -69,7 +73,7 @@ export function DashboardClient() {
       <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm font-medium text-ink-muted">Welcome back,</p>
-          <h1 className="font-display text-3xl text-ink md:text-4xl">Kiran Kumar Reddy</h1>
+          <h1 className="font-display text-3xl text-ink md:text-4xl">{user?.name || "Investor"}</h1>
         </div>
         <Button as={Link} href="/properties" variant="outline">Browse New Properties</Button>
       </div>
@@ -109,21 +113,28 @@ export function DashboardClient() {
         </Card>
       </div>
 
+      <div className="mt-6">
+        <AdvisorCard />
+      </div>
+
       <section id="investments" className="mt-10">
         <h2 className="mb-6 font-display text-2xl text-ink">Current Investments</h2>
         <Table columns={investmentColumns} data={myInvestments} searchable={false} pageSize={5} />
       </section>
 
       <section id="shortlist" className="mt-12">
-        <h2 className="mb-6 flex items-center gap-2 font-display text-2xl text-ink">
-          <Heart className="h-5 w-5 text-primary" /> Saved Properties
-        </h2>
-        {savedProperties.length === 0 ? (
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="flex items-center gap-2 font-display text-2xl text-ink">
+            <Heart className="h-5 w-5 text-primary" /> Saved Properties
+          </h2>
+          <Link href="/portal/shortlist" className="text-sm font-semibold text-primary">View all →</Link>
+        </div>
+        {shortlistItems.length === 0 ? (
           <EmptyState title="No saved properties yet" description="Tap the heart icon on any listing to save it here." action={<Button as={Link} href="/properties" size="sm">Browse Properties</Button>} />
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {savedProperties.map((p) => (
-              <Card key={p.id} hover className="overflow-hidden">
+            {shortlistItems.map((p) => (
+              <Card key={p.slug} hover className="overflow-hidden">
                 <div className="relative h-44 w-full">
                   <Image src={p.image} alt={p.title} fill sizes="360px" className="object-cover" />
                 </div>
@@ -205,7 +216,7 @@ export function DashboardClient() {
             <span className="text-ink-muted">Pending payout</span>
             <span className="font-tabular font-semibold text-ink">{formatINR(referralSummary.pendingPayout)}</span>
           </div>
-          <Button className="mt-5 w-full" size="sm">Invite a Friend</Button>
+          <Button as={Link} href="/portal/referrals" className="mt-5 w-full" size="sm">Invite a Friend</Button>
         </Card>
 
         <Card id="documents" className="p-6 lg:col-span-2">

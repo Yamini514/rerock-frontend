@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Info, TriangleAlert, X, XCircle } from "lucide-react";
@@ -17,6 +17,9 @@ const iconFor = {
 
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
+  const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- client-mount flag so the portal only renders after hydration, avoiding a server/client mismatch
+  useEffect(() => setMounted(true), []);
 
   const dismiss = useCallback((id) => {
     setToasts((t) => t.filter((x) => x.id !== id));
@@ -35,7 +38,7 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ toast, dismiss }}>
       {children}
-      {typeof window !== "undefined" &&
+      {mounted &&
         createPortal(
           <div className="pointer-events-none fixed bottom-6 right-6 z-[200] flex w-full max-w-sm flex-col gap-3 md:bottom-8 md:right-8">
             <AnimatePresence>

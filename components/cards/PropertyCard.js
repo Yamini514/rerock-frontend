@@ -1,18 +1,21 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { BedDouble, Bath, Heart, MapPin, Ruler, Scale } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge, statusTone } from "@/components/ui/Badge";
+import { useToast } from "@/components/ui/Toast";
+import { useShortlistStore, SHORTLIST_LIMIT } from "@/lib/store/shortlistStore";
 import { formatINR } from "@/lib/utils";
 import { getLocation } from "@/lib/data/locations";
 import { cn } from "@/lib/utils";
 
 export function PropertyCard({ property, className, compareChecked, onCompareToggle }) {
-  const [saved, setSaved] = useState(false);
+  const { toast } = useToast();
+  const saved = useShortlistStore((s) => s.isSaved(property.slug));
+  const toggleShortlist = useShortlistStore((s) => s.toggle);
   const location = getLocation(property.location);
 
   return (
@@ -36,7 +39,14 @@ export function PropertyCard({ property, className, compareChecked, onCompareTog
         <button
           onClick={(e) => {
             e.preventDefault();
-            setSaved((s) => !s);
+            const ok = toggleShortlist(property);
+            if (!ok) {
+              toast({
+                tone: "warning",
+                title: `Shortlist is full (${SHORTLIST_LIMIT}/${SHORTLIST_LIMIT})`,
+                description: "Remove one to add another.",
+              });
+            }
           }}
           aria-label="Save property"
           className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 backdrop-blur transition-transform active:scale-90"

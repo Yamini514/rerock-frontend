@@ -9,11 +9,13 @@ import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { MapView } from "@/components/properties/MapView";
+import { useClientAuth } from "@/components/portal/ClientAuthContext";
 import { agents } from "@/lib/data/agents";
 import { img } from "@/lib/images";
 
 export function ContactClient() {
   const { toast } = useToast();
+  const { user } = useClientAuth();
   const [submitting, setSubmitting] = useState(false);
 
   function handleSubmit(e) {
@@ -30,12 +32,19 @@ export function ContactClient() {
     <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
       <Card className="p-6 md:p-10">
         <p className="font-display text-2xl text-ink">Send us a message</p>
+        {user && (
+          <p className="mt-1 text-sm text-ink-muted">Signed in as {user.name} — we already have your contact details on file.</p>
+        )}
         <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <Input label="Full name" placeholder="Your name" required />
-            <Input label="Phone number" icon={Phone} placeholder="+91 98480 12345" required />
-          </div>
-          <Input label="Email" icon={Mail} type="email" placeholder="you@email.com" required />
+          {!user && (
+            <>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Input label="Full name" placeholder="Your name" required />
+                <Input label="Phone number" icon={Phone} placeholder="+91 98480 12345" required />
+              </div>
+              <Input label="Email" icon={Mail} type="email" placeholder="you@email.com" required />
+            </>
+          )}
           <Select label="I'm interested in">
             <option>Buying a property</option>
             <option>Investment advisory</option>

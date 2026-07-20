@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import { agents } from "@/lib/data/agents";
+import { getLocation } from "@/lib/data/locations";
 
 export default function AdminAgentsPage() {
   return (
@@ -31,6 +33,18 @@ export default function AdminAgentsPage() {
                 <p className="text-ink-faint">Experience</p>
               </div>
             </div>
+            {a.strongAreas?.length > 0 && (
+              <div className="mt-4 flex flex-wrap justify-center gap-1.5 border-t border-border pt-4">
+                {a.strongAreas.map((slug) => (
+                  <Badge key={slug} tone="primary">{getLocation(slug)?.name || slug}</Badge>
+                ))}
+              </div>
+            )}
+            {a.address && (
+              <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-ink-muted">
+                <MapPin className="h-3.5 w-3.5 shrink-0 text-ink-faint" /> {a.address}
+              </p>
+            )}
           </Card>
         ))}
       </div>

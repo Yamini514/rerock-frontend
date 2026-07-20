@@ -19,14 +19,30 @@ import { communities } from "@/lib/data/communities";
 import { formatINRFull, slugify } from "@/lib/utils";
 import { required, minLength, isPositiveNumber, inRange, runValidation, hasErrors } from "@/lib/validation";
 
-const columns = [
-  { key: "title", label: "Title", sortable: true },
-  { key: "type", label: "Type", sortable: true },
-  { key: "locationName", label: "Location", sortable: true },
-  { key: "builderName", label: "Builder", sortable: true },
-  { key: "price", label: "Price", sortable: true, render: (r) => formatINRFull(r.price) },
-  { key: "status", label: "Status", sortable: true, render: (r) => <Badge tone={statusTone[r.status] || "neutral"}>{r.status}</Badge> },
-];
+function buildColumns(onStatusChange) {
+  return [
+    { key: "title", label: "Title", sortable: true },
+    { key: "type", label: "Type", sortable: true },
+    { key: "locationName", label: "Location", sortable: true },
+    { key: "builderName", label: "Builder", sortable: true },
+    { key: "price", label: "Price", sortable: true, render: (r) => formatINRFull(r.price) },
+    { key: "status", label: "Status", sortable: true, render: (r) => <Badge tone={statusTone[r.status] || "neutral"}>{r.status}</Badge> },
+    {
+      key: "actions",
+      label: "Change Status",
+      render: (r) => (
+        <select
+          value={r.status}
+          onChange={(e) => onStatusChange(r.id, e.target.value)}
+          onClick={(e) => e.stopPropagation()}
+          className="h-9 rounded-lg border border-border-strong bg-surface px-2.5 text-xs text-ink outline-none transition-colors focus:border-primary"
+        >
+          {propertyStatuses.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
+      ),
+    },
+  ];
+}
 
 const emptyForm = {
   title: "",
@@ -56,6 +72,14 @@ export default function AdminPropertiesPage() {
     locationName: getLocation(p.location)?.name,
     builderName: getBuilder(p.builder)?.name,
   }));
+
+  function handleStatusChange(slug, status) {
+    setItems((list) => list.map((p) => (p.slug === slug ? { ...p, status } : p)));
+    const property = items.find((p) => p.slug === slug);
+    toast({ tone: "success", title: "Status updated", description: `${property?.title} is now ${status}.` });
+  }
+
+  const columns = buildColumns(handleStatusChange);
 
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));

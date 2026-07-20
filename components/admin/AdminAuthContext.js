@@ -19,8 +19,8 @@ export function AdminAuthProvider({ children }) {
     }
   }, []);
 
-  function login({ name, email, role }) {
-    const session = { name, email, role, avatar: avatar(5), signedInAt: new Date().toISOString() };
+  function login({ name, email, role, permissions }) {
+    const session = { name, email, role, permissions: permissions || [], avatar: avatar(5), signedInAt: new Date().toISOString() };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
     setUser(session);
     return session;

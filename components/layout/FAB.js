@@ -21,7 +21,7 @@ export function FAB() {
   if (hasOwnStickyCTA) return null;
 
   return (
-    <div className="fixed bottom-24 right-5 z-40 md:hidden">
+    <div className="fixed bottom-24 right-5 z-40 lg:hidden">
       <AnimatePresence>
         {open && (
           <motion.div

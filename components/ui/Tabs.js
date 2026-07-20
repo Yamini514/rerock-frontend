@@ -4,7 +4,7 @@ import { useState, useId } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-export function Tabs({ tabs, defaultValue, value, onChange, className, panelClassName }) {
+export function Tabs({ tabs, defaultValue, value, onChange, className, panelClassName, scroll = false }) {
   const layoutId = useId();
   const [internal, setInternal] = useState(defaultValue ?? tabs[0]?.value);
   const active = value ?? internal;
@@ -18,13 +18,18 @@ export function Tabs({ tabs, defaultValue, value, onChange, className, panelClas
 
   return (
     <div className={className}>
-      <div className="flex flex-wrap gap-1 rounded-pill bg-surface-soft p-1.5 w-fit">
+      <div
+        className={cn(
+          "flex gap-1 rounded-pill bg-surface-soft p-1.5",
+          scroll ? "overflow-x-auto [scrollbar-width:none] flex-nowrap" : "flex-wrap w-fit"
+        )}
+      >
         {tabs.map((tab) => (
           <button
             key={tab.value}
             onClick={() => select(tab.value)}
             className={cn(
-              "relative rounded-pill px-5 py-2.5 text-sm font-medium transition-colors duration-200",
+              "relative shrink-0 rounded-pill px-5 py-2.5 text-sm font-medium transition-colors duration-200",
               active === tab.value ? "text-white" : "text-ink-muted hover:text-ink"
             )}
           >

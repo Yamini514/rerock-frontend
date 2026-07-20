@@ -17,7 +17,7 @@ import { getProperty, properties } from "@/lib/data/properties";
 import { getCommunity } from "@/lib/data/communities";
 import { getBuilder } from "@/lib/data/builders";
 import { getLocation } from "@/lib/data/locations";
-import { getAgent } from "@/lib/data/agents";
+import { getAgent, matchingAgents } from "@/lib/data/agents";
 import { absoluteUrl } from "@/lib/seo";
 import { formatINR } from "@/lib/utils";
 import { Badge, statusTone } from "@/components/ui/Badge";
@@ -73,6 +73,7 @@ export default async function PropertyDetailPage({ params }) {
   const location = getLocation(property.location);
   const agent = getAgent(property.agent);
   const similar = properties.filter((p) => p.slug !== property.slug && p.type === property.type).slice(0, 3);
+  const nearbyAgents = matchingAgents(property.location).filter((a) => a.slug !== agent?.slug);
 
   const documents = [
     { name: `Sale Agreement — ${property.title}`, type: "PDF", date: "Updated Jul 2026" },
@@ -307,6 +308,27 @@ export default async function PropertyDetailPage({ params }) {
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {similar.map((p) => (
                     <PropertyCard key={p.slug} property={p} />
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {nearbyAgents.length > 0 && (
+              <Section title={`Agents Strong in ${location?.name || "this Area"}`}>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {nearbyAgents.map((a) => (
+                    <Card key={a.slug} className="flex items-center gap-4 p-5">
+                      <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full">
+                        <Image src={a.avatar} alt={a.name} fill sizes="56px" className="object-cover" />
+                      </span>
+                      <div>
+                        <p className="font-medium text-ink">{a.name}</p>
+                        <p className="text-xs text-ink-muted">{a.role}</p>
+                        <div className="mt-1 flex items-center gap-1 text-xs text-ink-faint">
+                          <Star className="h-3.5 w-3.5 fill-primary text-primary" /> {a.rating} · {a.dealsClosed} deals closed
+                        </div>
+                      </div>
+                    </Card>
                   ))}
                 </div>
               </Section>

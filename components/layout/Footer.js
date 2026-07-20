@@ -37,9 +37,10 @@ const columns = [
   {
     title: "Client",
     links: [
-      { label: "Client Dashboard", href: "/dashboard" },
-      { label: "My Profile", href: "/profile" },
-      { label: "Documents", href: "/profile/documents" },
+      { label: "Client Dashboard", href: "/portal/dashboard" },
+      { label: "My Profile", href: "/portal/profile" },
+      { label: "Documents", href: "/portal/documents" },
+      { label: "Support", href: "/portal/support" },
       { label: "Admin Portal", href: "/admin" },
     ],
   },
@@ -58,7 +59,7 @@ export function Footer() {
           <div>
             <Logo variant="full" />
             <p className="mt-5 max-w-sm text-sm text-ink-muted">
-              Your Trusted Real Estate Investment Partner — where dreams meet strategy.
+              Your Real Estate Investment Partner
             </p>
             <div className="mt-6 flex gap-3">
               {[

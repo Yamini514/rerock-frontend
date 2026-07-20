@@ -95,7 +95,7 @@ export default function AboutPage() {
               <Timeline items={milestones} />
             </Card>
           </div>
-          <div>
+          {/* <div>
             <h2 className="mb-8 flex items-center gap-2 font-display text-3xl text-ink">
               <Users className="h-6 w-6 text-primary" /> Meet the Team
             </h2>
@@ -112,7 +112,7 @@ export default function AboutPage() {
                 </Card>
               ))}
             </div>
-          </div>
+          </div> */}
         </section>
       </div>
     </div>
