@@ -83,7 +83,7 @@ export function Navbar() {
             <Link href={user ? "/portal/dashboard" : "/login"} className="flex h-11 w-11 items-center justify-center rounded-full text-ink-muted transition-colors hover:bg-surface-soft hover:text-ink" aria-label={user ? "Dashboard" : "Sign in"}>
               <LayoutDashboard className="h-5 w-5" />
             </Link>
-            <Button as={Link} href="/properties" size="md" className="ml-1">
+            <Button as={Link} href="/contact" size="md" className="ml-1">
               Book Consultation
             </Button>
           </div>

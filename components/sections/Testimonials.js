@@ -52,7 +52,7 @@ export function Testimonials() {
   }, []);
 
   return (
-    <section className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-32">
+    <section className="mx-auto max-w-[90rem] px-6 py-16 md:px-10 md:py-30">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <SectionHeading
           eyebrow="Client Stories"
